@@ -6,6 +6,8 @@ import ProjectList from './pages/projects/ProjectList';
 import ProjectDetail from './pages/projects/[id]';
 import TaskDetail from './pages/tasks/[id]';
 
+// Trigger Vercel redeploy
+
 function App() {
   return (
     <Router>
