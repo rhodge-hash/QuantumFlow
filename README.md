@@ -75,9 +75,25 @@ alembic -c alembic.ini upgrade head
 - **Frontend**: `http://localhost:3000`
 - **Backend API (Swagger UI)**: `http://localhost:8000/docs`
 
+## 🚀 Deployment Strategy
+
+This application is designed for a split deployment:
+-   **Frontend**: Deployed as a static site (e.g., Vercel, Netlify, GitHub Pages).
+-   **Backend**: Deployed to a cloud provider that supports Docker containers and PostgreSQL (e.g., Render.com, AWS ECS, Google Cloud Run).
+
+### Deploying the Frontend to Vercel
+
+Vercel provides seamless integration with GitHub for deploying modern web applications.
+
+1.  **Create a Vercel Account**: Sign up at [vercel.com](https://vercel.com/) using your GitHub account.
+2.  **Import Your GitHub Repository**: From your Vercel dashboard, click "New Project" and import your project's GitHub repository.
+3.  **Configure Project**: Vercel will usually auto-detect your React app. Ensure the "Root Directory" is set to `frontend/`.
+4.  **Environment Variables**: If your deployed backend has a public URL, you'll need to set an environment variable in Vercel for your frontend to connect to it. For example, `REACT_APP_API_BASE_URL` set to your backend's URL.
+5.  **Deploy**: Click "Deploy". Vercel will build and deploy your frontend, and set up automatic deployments for future pushes to your `main` branch.
+
 ## ⚙️ CI/CD with GitHub Actions
 
-This project includes a GitHub Actions workflow (`.github/workflows/ci-cd.yml`) to automate building and deploying the application.
+This project includes a GitHub Actions workflow (`.github/workflows/ci-cd.yml`) to automate building and pushing Docker images for the backend and frontend.
 
 ### Setup Steps:
 
@@ -85,13 +101,12 @@ This project includes a GitHub Actions workflow (`.github/workflows/ci-cd.yml`) 
     *   `DOCKER_USERNAME`: Your Docker Hub username.
     *   `DOCKER_PASSWORD`: Your Docker Hub access token or password.
 2.  **Update Docker Image Names**: In `.github/workflows/ci-cd.yml`, replace `your-backend-repo` and `your-frontend-repo` with your actual Docker repository names.
-3.  **Customize Deployment**: Modify the `deploy` job in `.github/workflows/ci-cd.yml` with your specific deployment logic (e.g., SSH commands to pull and restart services on your server).
 
 ### How it Works:
 
 -   The workflow triggers on pushes to the `main` branch.
 -   It builds and pushes Docker images for the backend and frontend to your configured Docker registry.
--   The `deploy` job then executes your custom deployment steps.
+-   These images can then be used for deploying your backend to a cloud provider.
 
 ## 🧪 Running Tests
 

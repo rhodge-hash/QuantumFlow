@@ -27,17 +27,3 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/your-frontend-repo:latest ./frontend
           docker push ${{ secrets.DOCKER_USERNAME }}/your-frontend-repo:latest
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment: production
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Deploy to server
-        run: |
-          echo "Deployment steps go here."
-          echo "For example, you might SSH into your server and run docker-compose pull and docker-compose up -d."
-          # Example: ssh user@your-server.com "cd /path/to/your/app && docker-compose pull && docker-compose up -d"
