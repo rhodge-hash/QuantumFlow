@@ -9,8 +9,10 @@ from src.models import user, project, task, feature_branch
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",  # React frontend
-    "http://localhost:8000",  # FastAPI backend (if needed for direct access)
+    "http://localhost:3000",  # Local React frontend
+    "http://localhost:8000",  # Local FastAPI backend
+    "https://quantum-flow-git-001-the-ultimate-outcome-roy-hodges-projects.vercel.app", # Vercel deployed frontend
+    "https://quantumflow-otmr.onrender.com", # Render.com deployed backend
 ]
 
 app.add_middleware(
