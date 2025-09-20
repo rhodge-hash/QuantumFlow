@@ -5,7 +5,7 @@ Welcome to the Project Management System! This application helps you manage your
 ## ✨ Features
 
 - **User Authentication**: Secure login and registration.
-- **Project Management**: Create, view, update, and delete projects.
+- **Project Management**: Create, view, update, and delete projects (full CRUD).
 - **Task Tracking**: Assign and track tasks within projects.
 - **Automated Workflows**: CI/CD pipeline with GitHub Actions for seamless integration and deployment.
 - **Agent-Driven Development**: Designed to integrate with AI agents for enhanced development workflows.
@@ -37,8 +37,8 @@ Follow these steps to get your development environment up and running.
 
 Make sure you have the following installed:
 - Docker & Docker Compose
-- Node.js (LTS) & npm
-- Python 3.11+
+- Node.js (LTS) & npm (for frontend development, though Docker handles most of it)
+- Python 3.11+ (for backend development, though Docker handles most of it)
 
 ### 1. Clone the Repository
 
@@ -47,49 +47,51 @@ git clone <repository-url>
 cd project-management-system
 ```
 
-### 2. Set up the Backend
+### 2. Start the Application
 
-Navigate to the `backend` directory and install dependencies:
-
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-cd ..
-```
-
-### 3. Set up the Frontend
-
-Navigate to the `frontend` directory and install dependencies:
-
-```bash
-cd frontend
-npm install
-cd ..
-```
-
-### 4. Start the Application
-
-Use Docker Compose to start the database, backend, and frontend services:
+Use Docker Compose to build and start the database, backend, and frontend services:
 
 ```bash
 docker-compose up --build -d
 ```
 
-### 5. Run Database Migrations
+This command will:
+- Build Docker images for the backend and frontend.
+- Start the PostgreSQL database service.
+- Start the FastAPI backend service.
+- Start the React frontend service.
 
-Once the database is up, run the migrations to create the schema:
+### 3. Run Database Migrations
+
+Once the database and backend are up, run the migrations to create the schema. You might need to wait a few moments for the database to be fully ready.
 
 ```bash
-source backend/venv/bin/activate
+source backend/venv/bin/activate # Activate backend virtual environment
 alembic -c alembic.ini upgrade head
 ```
 
-### 6. Access the Application
+### 4. Access the Application
 
-- **Backend API**: `http://localhost:8000`
 - **Frontend**: `http://localhost:3000`
+- **Backend API (Swagger UI)**: `http://localhost:8000/docs`
+
+## ⚙️ CI/CD with GitHub Actions
+
+This project includes a GitHub Actions workflow (`.github/workflows/ci-cd.yml`) to automate building and deploying the application.
+
+### Setup Steps:
+
+1.  **GitHub Secrets**: Add the following secrets to your GitHub repository settings (Settings > Secrets > Actions):
+    *   `DOCKER_USERNAME`: Your Docker Hub username.
+    *   `DOCKER_PASSWORD`: Your Docker Hub access token or password.
+2.  **Update Docker Image Names**: In `.github/workflows/ci-cd.yml`, replace `your-backend-repo` and `your-frontend-repo` with your actual Docker repository names.
+3.  **Customize Deployment**: Modify the `deploy` job in `.github/workflows/ci-cd.yml` with your specific deployment logic (e.g., SSH commands to pull and restart services on your server).
+
+### How it Works:
+
+-   The workflow triggers on pushes to the `main` branch.
+-   It builds and pushes Docker images for the backend and frontend to your configured Docker registry.
+-   The `deploy` job then executes your custom deployment steps.
 
 ## 🧪 Running Tests
 

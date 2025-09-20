@@ -1,3 +1,8 @@
 #1 - create and deploy project management system
+    - Resolved numerous backend and frontend errors (CORS, 500s, import errors, foreign key violations).
+    - Implemented full CRUD (Create, Read, Update, Delete) functionality for projects.
 #2 - setup ci/cd & sdd/tdd feature/branch workflows with agents
+    - Implemented GitHub Actions CI/CD workflow for automated build and deployment.
 #3 - document and iterate on the culmination of all of these top 3
+    - Updated README.md with current features, simplified getting started, and CI/CD setup instructions.
+    - Documented progress in top3.info.

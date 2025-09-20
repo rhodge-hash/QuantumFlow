@@ -2,9 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from .. import models, schemas
-from ..database import SessionLocal, engine
-
-models.Base.metadata.create_all(bind=engine)
+from ..database import SessionLocal, engine, Base
 
 router = APIRouter()
 
